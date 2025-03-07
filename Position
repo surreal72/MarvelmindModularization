@@ -2,6 +2,7 @@
 from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
+import pandas as pd
 
 def main():
     hedge = MarvelmindHedge(tty = "/dev/ttyACM0", adr=None, debug=False) # create MarvelmindHedge thread
@@ -11,7 +12,8 @@ def main():
     
     hedge.start() # start thread
     #an array that holds all of the position data [x, y, z, time]
-    hedge_pos=[]
+``` #trying to initialize the array without any values
+    hedge_pos=pd.array(index=['x', 'y', 'z','t'])
     while True:
         try:
             hedge.dataEvent.wait(1)
@@ -25,3 +27,8 @@ def main():
             hedge.stop()  # stop and close serial port
             sys.exit()
 main()
+#don't know whether this should be inside or outside of the "main" code
+#x_vals=hedge_pos[:,0]
+#y_vals=hedge_pos[:,1]
+#z_vals=hedge_pos[:,2]
+#time_vals=hedge_pos[:,3]
