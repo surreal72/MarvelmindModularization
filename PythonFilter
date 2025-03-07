@@ -1,4 +1,4 @@
-#gist of the code is to average the last 5 values and print that value
+#gist of the code is to average the last x-number of values and print that average value
 
 from marvelmind import MarvelmindHedge
 from time import sleep
@@ -12,17 +12,20 @@ def main():
         hedge.tty= sys.argv[1]
     
     hedge.start() # start thread
-    #an array that holds all of the position data [x, y, z, time]
-``` #trying to initialize the array without any values
+
+    #an array that holds all of the position data [x, y, z, time] 
+    #trying to initialize the array without any values
     hedge_pos=pd.array(index=['x', 'y', 'z','t'])
     hedge_pos_filter=pd.array(index=['x', 'y', 'z','t'])
     sum_count=5
+
     while True:
         try:
             hedge.dataEvent.wait(1)
             hedge.dataEvent.clear()
 
             if (hedge.positionUpdated):
+
                 hedge_pos.append(hedge.position)
                 #am I using vector calculus correctly here?
                 if (len(hedge_pos)>=sum_count):
@@ -30,6 +33,7 @@ def main():
                   sum=0
                   for i in range(sum_count):
                     sum+=hedge_pos(end-i)
+                    
                   hedge_pos_filter.append(sum/5)
     
         except KeyboardInterrupt:
