@@ -11,14 +11,17 @@ def main():
         hedge.tty= sys.argv[1]
     
     hedge.start() # start thread
+
     #an array that holds all of the position data [x, y, z, time]
 ``` #trying to initialize the array without any values
     hedge_pos=pd.array(index=['x', 'y', 'z','t'])
+
     while True:
         try:
             hedge.dataEvent.wait(1)
             hedge.dataEvent.clear()
 
+            #appending the position data to a new list to be examined later
             if (hedge.positionUpdated):
                 #could try to append into their own lists, or could try to print/show the data piece by piece
                 hedge_pos.append(hedge.position)
@@ -27,9 +30,9 @@ def main():
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
+            #don't know whether this should be inside or outside of the "main" code. The goal is to get the x,y,z and time-vals to graph the data and compare to real-world data
+            #x_vals=hedge_pos[:,0]
+            #y_vals=hedge_pos[:,1]
+            #z_vals=hedge_pos[:,2]
+            #time_vals=hedge_pos[:,3]
 main()
-#don't know whether this should be inside or outside of the "main" code
-#x_vals=hedge_pos[:,0]
-#y_vals=hedge_pos[:,1]
-#z_vals=hedge_pos[:,2]
-#time_vals=hedge_pos[:,3]
