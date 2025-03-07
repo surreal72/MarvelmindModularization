@@ -13,10 +13,11 @@ def main():
     
     hedge.start() # start thread
     #an array that holds all of the position data [x, y, z, time]
-``` #trying to initialize the array without any values
+    #trying to initialize the array without any values
+    #an array that holds the filtered data
     hedge_pos=pd.array(index=['x', 'y', 'z','t'])
     hedge_pos_filter=pd.array(index=['x', 'y', 'z','t'])
-    sum_count=5
+
     #threshold percentage for what values aren't considered
     threshold_val=70
     while True:
@@ -32,6 +33,8 @@ def main():
                   
                   if hedge.quality >= threshold_val:
                     hedge_pos_filter.append(hedge.position)
+                    #print command may not work
+                    hedge.print_position(hedge.position)
                     
     
         except KeyboardInterrupt:
