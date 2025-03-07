@@ -1,0 +1,9 @@
+#gist of the code is to average the last 5 values and print that value
+
+if length of list>5:
+  add current to the previous 4, average that value, add that to the list 
+
+#gist of the code is to disregard values if their quality is over a certain value (i.e. 80 percent)
+  if self.quality is<70
+    else
+      add to list
