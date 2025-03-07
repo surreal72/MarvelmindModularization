@@ -1,4 +1,5 @@
 #gist of the code is to average the last x-number of values and print that average value
+#could benefit from having a higher refresh rate to make up for the average time steps and positional data
 
 from marvelmind import MarvelmindHedge
 from time import sleep
@@ -15,6 +16,7 @@ def main():
 
     #an array that holds all of the position data [x, y, z, time] 
     #trying to initialize the array without any values
+    #an array that holds all of the "filtered" data values
     hedge_pos=pd.array(index=['x', 'y', 'z','t'])
     hedge_pos_filter=pd.array(index=['x', 'y', 'z','t'])
     sum_count=5
@@ -35,13 +37,14 @@ def main():
                     sum+=hedge_pos(end-i)
                     
                   hedge_pos_filter.append(sum/5)
+                  hedge.print_position(sum/5)
     
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
+            don't know whether this should be inside or outside of the "main" code
+            #x_vals=hedge_pos_filter[:,0]
+            #y_vals=hedge_pos_filter[:,1]
+            #z_vals=hedge_pos_filter[:,2]
+            #time_vals=hedge_pos_filter[:,3]
 main()
-#don't know whether this should be inside or outside of the "main" code
-#x_vals=hedge_pos[:,0]
-#y_vals=hedge_pos[:,1]
-#z_vals=hedge_pos[:,2]
-#time_vals=hedge_pos[:,3]
