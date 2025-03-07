@@ -37,6 +37,7 @@ def main():
                     sum+=hedge_pos(end-i)
                     
                   hedge_pos_filter.append(sum/5)
+                 #might require a new command to print position
                   hedge.print_position(sum/5)
     
         except KeyboardInterrupt:
