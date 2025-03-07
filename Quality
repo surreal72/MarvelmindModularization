@@ -10,6 +10,7 @@ def main():
         hedge.tty= sys.argv[1]
     
     hedge.start() # start thread
+    #creating an array to store quality data
     quality=[]
     while True:
         try:
