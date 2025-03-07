@@ -20,6 +20,7 @@ def main():
             hedge.dataEvent.clear()
 
             if (hedge.positionUpdated):
+                #could try to append into their own lists, or could try to print/show the data piece by piece
                 hedge_pos.append(hedge.position)
                 hedge.print_position()
     
