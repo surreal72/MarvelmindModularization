@@ -1,0 +1,13 @@
+cd ~/ros2_ws
+source /opt/ros/humble/setup.bash
+ls /dev/ttyACM0
+sudo chmod 0777 /dev/ttyACM0
+sudo apt install python3-colcon-common-extensions
+colcon build
+. install/setup.bash
+ros2 launch marvelmind_ros2 marvelmind_ros2.launch.py
+gnome-terminal 
+. install/setup.bash
+source /opt/ros/humble/setup.bash
+#any topic of choice 
+ros2 topic echo /hedgehog_pos_ang
