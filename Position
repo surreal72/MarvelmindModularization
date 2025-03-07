@@ -1,3 +1,4 @@
+#credit to @methylDragon and the Marvelmind team
 from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
