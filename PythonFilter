@@ -1,6 +1,6 @@
 #gist of the code is to average the last x-number of values and print that average value
 #could benefit from having a higher refresh rate to make up for the average time steps and positional data
-#credit to @methylDragon and the Marvelmind team
+#credit to @fictionlab and the Marvelmind team
 
 from marvelmind import MarvelmindHedge
 from time import sleep
