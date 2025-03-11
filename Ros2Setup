@@ -1,4 +1,4 @@
-#credit to @methylDragon and the Marvelmind team
+#credit to @fictionlab and the Marvelmind team
 #this is entered in linux terminal to setup ROS 2 simulation. However, still needs more testing to finalize the ROS 2 simulation itself
 
 cd ~/ros2_ws
