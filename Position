@@ -1,8 +1,11 @@
 #credit to @methylDragon and the Marvelmind team
+
 from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
-import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 def main():
     hedge = MarvelmindHedge(tty = "/dev/ttyACM0", adr=None, debug=False) # create MarvelmindHedge thread
@@ -13,8 +16,9 @@ def main():
     hedge.start() # start thread
 
     #an array that holds all of the position data [x, y, z, time]
-``` #trying to initialize the array without any values
-    hedge_pos=pd.array(index=['x', 'y', 'z','t'])
+    #trying to initialize the array without any values
+    
+    hedge_pos = []  # List to store position data
 
     while True:
         try:
@@ -30,9 +34,26 @@ def main():
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
-            #don't know whether this should be inside or outside of the "main" code. The goal is to get the x,y,z and time-vals to graph the data and compare to real-world data
-            #x_vals=hedge_pos[:,0]
-            #y_vals=hedge_pos[:,1]
-            #z_vals=hedge_pos[:,2]
-            #time_vals=hedge_pos[:,3]
+            #The goal is to get the x,y,z and time-vals to graph the data and compare to real-world data
+
+            # Convert to DataFrame
+            # Convert to NumPy array
+            hedge_pos_array = np.array(hedge_pos)
+            x_vals = hedge_pos.iloc[:, 0]  # First column
+            y_vals = hedge_pos.iloc[:, 1]  # Second column
+            z_vals = hedge_pos.iloc[:, 2]  # Third column
+            time_vals = hedge_pos.iloc[:, 3]  # Fourth column
+
+            plt.plot(time_vals, x_vals, label="X values", marker='o')
+            plt.plot(time_vals, y_vals, label="Y values", marker='s')
+            plt.plot(time_vals, z_vals, label="Z values", marker='^')
+
+            # Add labels and legend
+            plt.xlabel("Time")
+            plt.ylabel("Position")
+            plt.title("X, Y, and Z positions over Time for Marvelmind Drone Querying")
+            plt.legend()  # Show legend
+
+            plt.show()
+
 main()
