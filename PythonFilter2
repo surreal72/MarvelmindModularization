@@ -1,9 +1,11 @@
-gist of the code is to average the last 5 values and print that value
+#gist of the code is to remove values that fall below a quality threshold
+#credit to @methylDragon and the Marvelmind team
 
 from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
-import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
 
 def main():
     hedge = MarvelmindHedge(tty = "/dev/ttyACM0", adr=None, debug=False) # create MarvelmindHedge thread
@@ -12,14 +14,16 @@ def main():
         hedge.tty= sys.argv[1]
     
     hedge.start() # start thread
-    #an array that holds all of the position data [x, y, z, time]
-    #trying to initialize the array without any values
-    #an array that holds the filtered data
-    hedge_pos=pd.array(index=['x', 'y', 'z','t'])
-    hedge_pos_filter=pd.array(index=['x', 'y', 'z','t'])
+
+    #an array that holds all of the position data [x, y, z, time] 
+    #an array that holds all of the "filtered" data values
+
+    hedge_pos = []  # List to store position data
+    hedge_pos_filter=[] #List to store filtered-position-data
 
     #threshold percentage for what values aren't considered
     threshold_val=70
+
     while True:
         try:
             hedge.dataEvent.wait(1)
@@ -34,20 +38,17 @@ def main():
                   if hedge.quality >= threshold_val:
                     hedge_pos_filter.append(hedge.position)
                     #print command may not work
-                    hedge.print_position(hedge.position)
+                    hedge.print_position()
                     
     
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
-main()
-#don't know whether this should be inside or outside of the "main" code
-#x_vals=hedge_pos[:,0]
-#y_vals=hedge_pos[:,1]
-#z_vals=hedge_pos[:,2]
-#time_vals=hedge_pos[:,3]
+            #copy over all x,y,z,and time values
+            #x_vals=hedge_pos_filter[:,0]
+            #y_vals=hedge_pos_filter[:,1]
+            #z_vals=hedge_pos_filter[:,2]
+            #time_vals=hedge_pos_filter[:,3]
 
-#gist of the code is to disregard values if their quality is over a certain value (i.e. 80 percent)
-  if self.quality is<70
-    else
-      add to list
+main()
+
