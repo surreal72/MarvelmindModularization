@@ -1,7 +1,11 @@
+#goal is to query quality functions
 #credit to @methylDragon and the Marvelmind team
+
 from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
+import numpy as np
+import matplotlib.pyplot as plt
 
 def main():
     hedge = MarvelmindHedge(tty = "/dev/ttyACM0", adr=None, debug=False) # create MarvelmindHedge thread
