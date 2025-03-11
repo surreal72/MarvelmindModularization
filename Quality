@@ -1,5 +1,5 @@
 #goal is to query quality functions
-#credit to @methylDragon and the Marvelmind team
+#credit to @fictionlab and the Marvelmind team
 
 from marvelmind import MarvelmindHedge
 from time import sleep
