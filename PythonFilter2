@@ -1,5 +1,5 @@
 #gist of the code is to remove values that fall below a quality threshold
-#credit to @methylDragon and the Marvelmind team
+#credit to @fictionlab and the Marvelmind team
 
 from marvelmind import MarvelmindHedge
 from time import sleep
