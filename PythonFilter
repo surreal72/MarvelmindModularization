@@ -38,7 +38,8 @@ def main():
                     sum+=hedge_pos[end-i:,0]
                     hedge_pos_filter.append(sum/5)
                     #might require a new command to print position
-                    hedge.print_position(sum/5)
+                    #can't use previously created functions. This should just print the averaged value to terminal
+                    hedge.print(sum/5)
     
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
