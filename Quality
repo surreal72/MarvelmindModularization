@@ -7,6 +7,21 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
+def graph(data):
+    # Extract individual columns
+    address = data[:, 0]  # First column (address)
+    quality = data[:, 1]  # Second column (quality)
+
+    plt.plot(address, quality, label="Quality", marker='o')
+
+    # Add labels and legend
+    plt.xlabel("Address")
+    plt.ylabel("Quality")
+    plt.title("Address vs. Quality for Marvelmind Drone Querying")
+    plt.legend()  # Show legend
+
+    plt.show()
+
 def main():
     hedge = MarvelmindHedge(tty = "/dev/ttyACM0", adr=None, debug=False) # create MarvelmindHedge thread
     
@@ -27,4 +42,5 @@ def main():
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
+            graph(quality)
 main()
