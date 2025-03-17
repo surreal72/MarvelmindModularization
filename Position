@@ -47,7 +47,7 @@ def main():
             #appending the position data to a new list to be examined later
             if (hedge.positionUpdated):
                 #trying to append a new row of data beneath the previous row of data for the hedge_position dataframe
-                hedge_pos = pd.concat([hedge_pos, pd.DataFrame([hedge], columns=["X", "Y", "Z", "Time"])], ignore_index=True)
+                hedge_pos = pd.concat([hedge_pos, pd.DataFrame([hedge.position], columns=["X", "Y", "Z", "Time"])], ignore_index=True)
                 hedge.print_position()
     
         except KeyboardInterrupt:
