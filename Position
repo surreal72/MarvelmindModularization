@@ -5,14 +5,15 @@ from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
 import numpy as np
+import pandas as pd 
 import matplotlib.pyplot as plt
 
 def graph(data):
     # Extract individual columns
-    x_vals = data[:, 0]  # First column (x)
-    y_vals = data[:, 1]  # Second column (y)
-    z_vals = data[:, 2]  # Third column (z)
-    time_vals = data[:, 3]  # Fourth column (time)
+    x_vals = data["X"]  # First column (x)
+    y_vals = data["Y"]  # Second column (y)
+    z_vals = data["Z"]  # Third column (z)
+    time_vals = data["Time"]  # Fourth column (time)
 
     plt.plot(time_vals, x_vals, label="X values", marker='o')
     plt.plot(time_vals, y_vals, label="Y values", marker='s')
@@ -37,7 +38,7 @@ def main():
     #an array that holds all of the position data [x, y, z, time]
     #trying to initialize the array without any values
     
-    hedge_pos = []  # List to store position data
+    hedge_pos = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store position data
 
     while True:
         try:
@@ -46,16 +47,14 @@ def main():
 
             #appending the position data to a new list to be examined later
             if (hedge.positionUpdated):
-                #could try to append into their own lists, or could try to print/show the data piece by piece
-                hedge_pos.append(hedge.position)
+                #trying to append a new row of data beneath the previous row of data for the hedge_position dataframe
+                hedge_pos = pd.concat([hedge_pos, pd.DataFrame([hedge], columns=["X", "Y", "Z", "Time"])], ignore_index=True)
                 hedge.print_position()
     
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
             #The goal is to get the x,y,z and time-vals to graph the data and compare to real-world data
-            # Convert to NumPy array
-            hedge_pos_array = np.array(hedge_pos)
-            graph(hedge_pos_array)
+            graph(hedge_pos)
 
 main()
