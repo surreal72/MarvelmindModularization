@@ -36,7 +36,7 @@ def main():
                   quality=float(hedge.quality[1])
                   
                   if hedge.quality >= threshold_val:
-                    hedge_pos_filter = pd.concat([hedge_pos, pd.DataFrame([hedge], columns=["X", "Y", "Z", "Time"])], ignore_index=True)
+                    hedge_pos_filter = pd.concat([hedge_pos, pd.DataFrame([hedge.position], columns=["X", "Y", "Z", "Time"])], ignore_index=True)
                     #print command may not work
                     hedge.print_position()
                     
