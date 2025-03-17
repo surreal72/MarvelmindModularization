@@ -4,7 +4,7 @@
 from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
-import numpy as np
+import pandas as pd 
 import matplotlib.pyplot as plt
 
 def main():
@@ -18,9 +18,8 @@ def main():
     #an array that holds all of the position data [x, y, z, time] 
     #an array that holds all of the "filtered" data values
 
-    hedge_pos = []  # List to store position data
-    hedge_pos_filter=[] #List to store filtered-position-data
-
+    hedge_pos = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store position data  
+    hedge_pos_filter = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store filtered-position data 
     #threshold percentage for what values aren't considered
     threshold_val=70
 
@@ -33,10 +32,11 @@ def main():
               hedge_pos.append(hedge.position)
                 #converting quality array into just the numerical value
                 if(hedge.qualityUpdated):
+                  #from quality(self)=[address, quality]
                   quality=float(hedge.quality[1])
                   
                   if hedge.quality >= threshold_val:
-                    hedge_pos_filter.append(hedge.position)
+                    hedge_pos_filter = pd.concat([hedge_pos, pd.DataFrame([hedge], columns=["X", "Y", "Z", "Time"])], ignore_index=True)
                     #print command may not work
                     hedge.print_position()
                     
@@ -45,10 +45,11 @@ def main():
             hedge.stop()  # stop and close serial port
             sys.exit()
             #copy over all x,y,z,and time values
-            #x_vals=hedge_pos_filter[:,0]
-            #y_vals=hedge_pos_filter[:,1]
-            #z_vals=hedge_pos_filter[:,2]
-            #time_vals=hedge_pos_filter[:,3]
+            # Extract individual columns
+            x_vals = data["X"]  # First column (x)
+            y_vals = data["Y"]  # Second column (y)
+            z_vals = data["Z"]  # Third column (z)
+            time_vals = data["Time"]  # Fourth column (time)
 
 main()
 
