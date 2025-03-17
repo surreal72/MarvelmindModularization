@@ -5,7 +5,7 @@
 from marvelmind import MarvelmindHedge
 from time import sleep
 import sys
-import numpy as np
+import pandas as pd 
 import matplotlib.pyplot as plt
 
 def main():
@@ -19,8 +19,8 @@ def main():
     #an array that holds all of the position data [x, y, z, time] 
     #an array that holds all of the "filtered" data values
 
-    hedge_pos = []  # List to store position data
-    hedge_pos_filter=[] #List to store filtered-position-data
+    hedge_pos = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store position data
+    hedge_pos_filter = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store position data
     sum_count=5
 
     while True:
@@ -29,24 +29,21 @@ def main():
             hedge.dataEvent.clear()
 
             if (hedge.positionUpdated):
+                new_position = pd.DataFrame([hedge.position])  # Convert to DataFrame
+                hedge_pos = pd.concat([hedge_pos, new_position], ignore_index=True)
 
-                hedge_pos.append(hedge.position)
                 if (len(hedge_pos)>=sum_count):
-                  sum=[]
-
-                  for i in range(sum_count):
-                    sum+=hedge_pos[end-i:,0]
-                    hedge_pos_filter.append(sum/5)
-                    #might require a new command to print position
+                    avg = hedge_pos.iloc[-sum_count:].mean()
+                    hedge_pos_filter = pd.concat([hedge_pos_filter, avg], ignore_index=True)
                     #can't use previously created functions. This should just print the averaged value to terminal
-                    hedge.print(sum/5)
+                    print(avg)
     
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
             #copy over all x,y,z,and time values
-            #x_vals=hedge_pos_filter[:,0]
-            #y_vals=hedge_pos_filter[:,1]
-            #z_vals=hedge_pos_filter[:,2]
-            #time_vals=hedge_pos_filter[:,3]
+            #x_vals=hedge_pos_filter["X"]
+            #y_vals=hedge_pos_filter["Y"]
+            #z_vals=hedge_pos_filter["Z"]
+            #time_vals=hedge_pos_filter["Time"]
 main()
