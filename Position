@@ -54,6 +54,7 @@ def main():
             	t=hedge.position()[4]
             	new_row=pd.DataFrame({"X":[x],"Y":[y],"Z":[z],"Time":[t]})
             	hedge_pos=pd.concat([hedge_pos,new_row])
+                hedge.positionUpdated = False  # Reset the flag
             	
 
         except KeyboardInterrupt:
