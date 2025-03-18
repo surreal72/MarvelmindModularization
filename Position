@@ -37,7 +37,7 @@ def main():
     #an array that holds all of the position data [x, y, z, time]
     #trying to initialize the array without any values
     
-    hedge_pos = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store position data
+    hedge_pos=pd.DataFrame(columns=["X","Y","Z","Time"]) #List to store positional data
 
     while True:
         try:
@@ -46,10 +46,16 @@ def main():
 
             #appending the position data to a new list to be examined later
             if (hedge.positionUpdated):
-                #trying to append a new row of data beneath the previous row of data for the hedge_position dataframe
-                hedge_pos = pd.concat([hedge_pos, pd.DataFrame([hedge.position], columns=["X", "Y", "Z", "Time"])], ignore_index=True)
-                hedge.print_position()
-    
+            	
+            	#pulls data from the hedge object, and then appends it to a pre-existing dataframe for position and time
+            	x=hedge.position()[1]
+            	y=hedge.position()[2]
+            	z=hedge.position()[3]
+            	t=hedge.position()[4]
+            	new_row=pd.DataFrame({"X":[x],"Y":[y],"Z":[z],"Time":[t]})
+            	hedge_pos=pd.concat([hedge_pos,new_row])
+            	
+
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
             sys.exit()
