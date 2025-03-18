@@ -19,21 +19,28 @@ def main():
     #an array that holds all of the position data [x, y, z, time] 
     #an array that holds all of the "filtered" data values
 
-    hedge_pos = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store position data
-    hedge_pos_filter = pd.DataFrame(columns=["X", "Y","Z", "Time"])  # List to store position data
-    sum_count=5
+    hedge_pos=pd.DataFrame(columns=["X","Y","Z","Time"]) #List to store positional data
+    hedge_pos_filter=pd.DataFrame(columns=["X","Y","Z","Time"]) #List to store positional data
 
     while True:
         try:
             hedge.dataEvent.wait(1)
             hedge.dataEvent.clear()
 
+            #appending the position data to a new list to be examined later
             if (hedge.positionUpdated):
-                new_position = pd.DataFrame([hedge.position])  # Convert to DataFrame
-                hedge_pos = pd.concat([hedge_pos, new_position], ignore_index=True)
+            	
+            	#pulls data from the hedge object, and then appends it to a pre-existing dataframe for position and time
+            	x=hedge.position()[1]
+            	y=hedge.position()[2]
+            	z=hedge.position()[3]
+            	t=hedge.position()[4]
+            	new_row=pd.DataFrame({"X":[x],"Y":[y],"Z":[z],"Time":[t]})
+            	hedge_pos=pd.concat([hedge_pos,new_row])
 
                 if (len(hedge_pos)>=sum_count):
                     avg = hedge_pos.iloc[-sum_count:].mean()
+                    #avg_df=pd.DataFrame({"X":[x],"Y":[y],"Z":[z],"Time":[t]})
                     hedge_pos_filter = pd.concat([hedge_pos_filter, avg], ignore_index=True)
                     #can't use previously created functions. This should just print the averaged value to terminal
                     print(avg)
