@@ -59,8 +59,8 @@ def main():
 
         except KeyboardInterrupt:
             hedge.stop()  # stop and close serial port
-            sys.exit()
             #The goal is to get the x,y,z and time-vals to graph the data and compare to real-world data
             graph(hedge_pos)
+            sys.exit()
 
 main()
