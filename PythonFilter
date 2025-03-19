@@ -3,7 +3,7 @@
 #credit to @fictionlab and the Marvelmind team
 
 from marvelmind import MarvelmindHedge
-from time import sleep
+from time import sleep, time  # Import time()
 import sys
 import pandas as pd 
 import matplotlib.pyplot as plt
@@ -20,6 +20,7 @@ def main():
     hedge_pos_filter = pd.DataFrame(columns=["X", "Y", "Z", "Time"])  # Store filtered data
 
     sum_count = 5  # Number of last values to average
+    initial_time = time()  # Capture the starting time
 
     while True:
         try:
@@ -30,7 +31,7 @@ def main():
                 x = hedge.position()[1]
                 y = hedge.position()[2]
                 z = hedge.position()[3]
-                t = hedge.position()[4]
+                t = time() - initial_time  # Compute time relative to start
                 
                 new_row = pd.DataFrame({"X": [x], "Y": [y], "Z": [z], "Time": [t]})
                 hedge_pos = pd.concat([hedge_pos, new_row], ignore_index=True)
