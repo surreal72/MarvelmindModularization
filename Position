@@ -6,11 +6,11 @@ import matplotlib.pyplot as plt
 
 # Function to graph the collected data
 def graph(data):
-    # Extract individual columns
-    x_vals = data["X"]  # First column (x)
-    y_vals = data["Y"]  # Second column (y)
-    z_vals = data["Z"]  # Third column (z)
-    time_vals = data["Time"]  # Fourth column (time)
+    # Convert Series to NumPy arrays before plotting
+    x_vals = data["X"].to_numpy()
+    y_vals = data["Y"].to_numpy()
+    z_vals = data["Z"].to_numpy()
+    time_vals = data["Time"].to_numpy()
 
     # Plot the data
     plt.plot(time_vals, x_vals, label="X values", marker='o')
@@ -20,11 +20,10 @@ def graph(data):
     # Add labels and legend
     plt.xlabel("Time")
     plt.ylabel("Position")
-    plt.title("X, Y, and Z positions over Time for Marvelmind Drone Querying")
-    plt.legend()  # Show legend
-
+    plt.title("X, Y, and Z positions over Time for Marvelmind Drone Querying with Position Averaging")
+    plt.legend()
     plt.show()
-
+    
 # Main function to interact with the Marvelmind Hedge and collect data
 def main():
     hedge = MarvelmindHedge(tty="/dev/ttyACM0", adr=None, debug=False)  # Create MarvelmindHedge thread
